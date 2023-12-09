@@ -2,6 +2,7 @@ import {
   Card,
   CardBody,
   GridItem,
+  HStack,
   Heading,
   Image,
   Text,
@@ -9,6 +10,7 @@ import {
 import React from "react";
 import { Game } from "../hooks/useGames";
 import PlatformIIconList from "./PlatformIIconList";
+import CriticScore from "./CriticScore";
 
 interface GameCardProps {
   game: Game;
@@ -19,9 +21,12 @@ const GameCard = ({ game }: GameCardProps) => {
       <Image src={game.background_image} />
       <CardBody>
         <Heading fontSize="2xl">{game.name}</Heading>
+        <HStack justifyContent='space-between'>
         <PlatformIIconList
           platforms={game.parent_platforms.map((p) => p.platform)}
         />
+        <CriticScore score={game.metacritic} />
+        </HStack>
       </CardBody>
     </Card>
   );
