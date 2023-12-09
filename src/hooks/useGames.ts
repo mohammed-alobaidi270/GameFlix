@@ -1,5 +1,6 @@
 import useData from "./useData";
 import { Genre } from "./useGenres";
+import { Platform } from "./usePlatforms";
 // export interface FetchGamesResponse {
 //     count:                number;
 //     next:                 string;
@@ -64,7 +65,7 @@ export interface Game {
   stores: Store[];
   clip: null;
   tags: GameGenre[];
-  esrb_rating: Platform;
+  esrb_rating: GamePlatform;
   short_screenshots: ShortScreenshot[];
 }
 
@@ -81,7 +82,7 @@ export enum Color {
   The0F0F0F = "0f0f0f",
 }
 
-export interface Platform {
+export interface GamePlatform {
   id: number;
   name: string;
   slug: string;
@@ -114,7 +115,7 @@ export enum Language {
 }
 
 export interface ParentPlatform {
-  platform: Platform;
+  platform: GamePlatform;
 }
 
 export interface PlatformElement {
@@ -164,15 +165,19 @@ export interface Store {
   store: GameGenre;
 }
 
-function useGames(selectedGenre: Genre | null) {
+function useGames(
+  selectedGenre: Genre | null,
+  selectedPlatform: Platform | null
+) {
   return useData<Game>(
     "/games",
     {
       params: {
         genres: selectedGenre?.id,
+        parent_platforms: selectedPlatform?.id,
       },
     },
-    [selectedGenre?.id]
+    [selectedGenre?.id,selectedPlatform?.id]
   );
 }
 
