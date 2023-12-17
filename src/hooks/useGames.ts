@@ -1,21 +1,5 @@
+import { GameQuery } from "../App";
 import useData from "./useData";
-import { Genre } from "./useGenres";
-import { Platform } from "./usePlatforms";
-// export interface FetchGamesResponse {
-//     count:                number;
-//     next:                 string;
-//     previous:             null;
-//     results:              Game[];
-//     seo_title:            string;
-//     seo_description:      string;
-//     seo_keywords:         string;
-//     seo_h1:               string;
-//     noindex:              boolean;
-//     nofollow:             boolean;
-//     description:          string;
-//     filters:              Filters;
-//     nofollow_collections: string[];
-// }
 
 export interface Filters {
   years: FiltersYear[];
@@ -165,19 +149,16 @@ export interface Store {
   store: GameGenre;
 }
 
-function useGames(
-  selectedGenre: Genre | null,
-  selectedPlatform: Platform | null
-) {
+function useGames(gameQuery: GameQuery) {
   return useData<Game>(
     "/games",
     {
       params: {
-        genres: selectedGenre?.id,
-        parent_platforms: selectedPlatform?.id,
+        genres: gameQuery.genre?.id,
+        parent_platforms: gameQuery.platform?.id,
       },
     },
-    [selectedGenre?.id,selectedPlatform?.id]
+    [gameQuery]
   );
 }
 

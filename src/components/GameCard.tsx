@@ -1,25 +1,23 @@
 import {
   Card,
   CardBody,
-  GridItem,
   HStack,
   Heading,
   Image,
-  Text,
 } from "@chakra-ui/react";
-import React from "react";
 import { Game } from "../hooks/useGames";
 import PlatformIIconList from "./PlatformIIconList";
 import CriticScore from "./CriticScore";
 import getCroppedImageUrl from "../services/image_url";
-
+import logo from '../assets/logo.webp'
 interface GameCardProps {
   game: Game;
 }
 const GameCard = ({ game }: GameCardProps) => {
   return (
     <Card>
-      <Image src={getCroppedImageUrl(game.background_image)} />
+
+     {game.background_image != null ? <Image src={getCroppedImageUrl(game.background_image)} /> :  <Image src={logo} /> }
       <CardBody>
         <Heading fontSize="2xl">{game.name}</Heading>
         <HStack justifyContent='space-between'>
